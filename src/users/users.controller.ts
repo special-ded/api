@@ -8,8 +8,10 @@ import {
   HttpStatus,
   Param,
   Post,
-  Put, Query,
-  UseGuards, ValidationPipe
+  Put,
+  Query,
+  UseGuards,
+  ValidationPipe,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -18,45 +20,49 @@ import { User } from "./shemas/users.schema";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { HttpException } from "@nestjs/common/exceptions/http.exception";
 import { ListQueryParamsDto } from "../core/dto/list-query-params.dto";
+import { Role } from "src/auth/role-auth.decorator";
 
 @UseGuards(JwtAuthGuard)
-@Controller('users')
+@Controller("users")
 export class UsersController {
+  constructor(private usersService: UsersService) {}
 
-  constructor(
-    private usersService: UsersService
-  ) {
-  }
-
+  @Role("ADMIN")
   @Get()
   @HttpCode(HttpStatus.OK)
   public getAll(
-    @Query(new ValidationPipe({
-      transform: true,
-      transformOptions: {
-        enableImplicitConversion: false
-      },
-      forbidNonWhitelisted: true
-    })) query: ListQueryParamsDto
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: {
+          enableImplicitConversion: false,
+        },
+        forbidNonWhitelisted: true,
+      })
+    )
+    query: ListQueryParamsDto
   ): Promise<User[]> {
     return this.usersService.getAll(query);
   }
 
-  @Get(':id')
-  public getOne(@Param('id') id: string): Promise<User> {
+  @Role("ADMIN")
+  @Get(":id")
+  public getOne(@Param("id") id: string): Promise<User> {
     return this.usersService.getById(id);
   }
 
+  @Role("ADMIN")
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @Header('Ololo-Header', '777')
+  @Header("Ololo-Header", "777")
   public create(@Body() body: CreateUserDto): Promise<User | HttpException> {
     return this.usersService.create(body);
   }
 
-  @Delete(':id')
+  @Role("ADMIN")
+  @Delete(":id")
   @HttpCode(HttpStatus.OK)
-  public remove(@Param('id') id: string): Promise<User> {
+  public remove(@Param("id") id: string): Promise<User> {
     return this.usersService.remove(id);
   }
 
@@ -71,11 +77,12 @@ export class UsersController {
    @Param() params: FindOneParams,
   * */
 
-  @Put(':id')
+  @Role("ADMIN")
+  @Put(":id")
   @HttpCode(HttpStatus.OK)
   public update(
-    @Param('id') id: string,
-    @Body() body: UpdateUserDto,
+    @Param("id") id: string,
+    @Body() body: UpdateUserDto
   ): Promise<User> {
     return this.usersService.update(id, body);
   }
