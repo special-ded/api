@@ -35,13 +35,13 @@ export class User {
   @Prop({
     required: true,
   })
-  @Exclude()
-  password: string;
+  role: string;
 
   @Prop({
     required: true,
   })
-  role: string;
+  @Exclude()
+  password: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
