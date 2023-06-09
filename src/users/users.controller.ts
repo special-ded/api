@@ -22,12 +22,11 @@ import { HttpException } from "@nestjs/common/exceptions/http.exception";
 import { ListQueryParamsDto } from "../core/dto/list-query-params.dto";
 import { Role } from "src/auth/role-auth.decorator";
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller("users")
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  // @Role("ADMIN")
   @Get()
   @HttpCode(HttpStatus.OK)
   public getAll(
@@ -45,13 +44,11 @@ export class UsersController {
     return this.usersService.getAll(query);
   }
 
-  // @Role("ADMIN")
   @Get(":id")
   public getOne(@Param("id") id: string): Promise<User> {
     return this.usersService.getById(id);
   }
 
-  // @Role("ADMIN")
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @Header("Ololo-Header", "777")
@@ -59,7 +56,6 @@ export class UsersController {
     return this.usersService.create(body);
   }
 
-  // @Role("ADMIN")
   @Delete(":id")
   @HttpCode(HttpStatus.OK)
   public remove(@Param("id") id: string): Promise<User> {
@@ -77,7 +73,6 @@ export class UsersController {
    @Param() params: FindOneParams,
   * */
 
-  // @Role("ADMIN")
   @Put(":id")
   @HttpCode(HttpStatus.OK)
   public update(
