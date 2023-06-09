@@ -13,6 +13,12 @@ export class AuthController {
     return this.authService.login(user);
   }
 
+  @UseGuards(LocalAuthGuard)
+  @Post("register")
+  async register(@Req() { user }: any) {
+    return this.authService.register(user);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get("profile")
   getProfile(@Request() req: any) {
