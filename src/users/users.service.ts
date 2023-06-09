@@ -13,14 +13,10 @@ import { HttpException } from "@nestjs/common/exceptions/http.exception";
 import { BaseControllerService } from "../core/base/base-controller.service";
 import { ListQueryParamsDto } from "../core/dto/list-query-params.dto";
 import { use } from "passport";
-import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(User.name) private model: Model<UserDocument>,
-    private jwtService: JwtService
-  ) {}
+  constructor(@InjectModel(User.name) private model: Model<UserDocument>) {}
 
   public async getAll(query: ListQueryParamsDto): Promise<User[]> {
     return BaseControllerService.getAll<User>(this.model, query);
