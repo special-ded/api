@@ -18,9 +18,9 @@ export class AuthController {
   getProfile(@Request() req: any) {
     return {
       id: req.user._id,
-      // username: req.user.username,
-      // createdAt: req.user.createdAt,
-      // updatedAt: req.user.updatedAt,
+      username: req.user.username,
+      createdAt: req.user.createdAt,
+      updatedAt: req.user.updatedAt,
     };
   }
 }
