@@ -21,6 +21,7 @@ export class AuthController {
       username: req.user.username,
       createdAt: req.user.createdAt,
       updatedAt: req.user.updatedAt,
+      token: this.authService.login(req),
     };
   }
 }
