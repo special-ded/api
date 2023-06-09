@@ -20,7 +20,7 @@ import { User } from "./shemas/users.schema";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { HttpException } from "@nestjs/common/exceptions/http.exception";
 import { ListQueryParamsDto } from "../core/dto/list-query-params.dto";
-// import { Role } from "src/auth/role-auth.decorator";
+import { Role } from "src/auth/role-auth.decorator";
 
 @UseGuards(JwtAuthGuard)
 @Controller("users")
