@@ -40,11 +40,6 @@ export class User {
   @Prop({
     required: true,
   })
-  token: string;
-
-  @Prop({
-    required: true,
-  })
   @Exclude()
   password: string;
 }
