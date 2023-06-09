@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 import { Exclude } from "class-transformer";
 
 export type UserDocument = User & Document;
@@ -10,16 +10,15 @@ export type UserDocument = User & Document;
   id: true,
   versionKey: false,
   toJSON: {
-    transform: function(doc, ret) {
+    transform: function (doc, ret) {
       ret.id = ret._id;
       delete ret._id;
     },
     virtuals: true,
-    getters: true
+    getters: true,
   },
 })
 export class User {
-
   @Prop({
     required: true,
     default: uuidv4,
@@ -29,15 +28,20 @@ export class User {
   @Prop({
     required: true,
     unique: true,
-    dropDups: true
+    dropDups: true,
   })
   username: string;
 
   @Prop({
-    required: true
+    required: true,
   })
   @Exclude()
   password: string;
+
+  @Prop({
+    required: true,
+  })
+  role: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
