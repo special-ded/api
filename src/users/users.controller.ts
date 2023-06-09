@@ -45,7 +45,7 @@ export class UsersController {
     return this.usersService.getAll(query);
   }
 
-  // @Role("ADMIN")
+  @Role("ADMIN")
   @Get(":id")
   public getOne(@Param("id") id: string): Promise<User> {
     return this.usersService.getById(id);
