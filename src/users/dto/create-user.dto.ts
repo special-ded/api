@@ -1,6 +1,7 @@
 import {
   IsDefined,
-  IsNotEmpty, IsNotEmptyObject,
+  IsNotEmpty,
+  IsNotEmptyObject,
   IsNumber,
   IsObject,
   IsOptional,
@@ -8,7 +9,7 @@ import {
   IsString,
   Length,
   Max,
-  Min
+  Min,
 } from "class-validator";
 
 export class CreateUserDto {
@@ -24,4 +25,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   readonly password: string;
 
+  @Length(3, 25)
+  @IsString()
+  @IsDefined()
+  @IsNotEmpty()
+  readonly role: string;
 }
