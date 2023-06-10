@@ -30,6 +30,27 @@ export class AuthService {
     };
   }
 
+  // async login(dto: LoginUserDto) {
+  //   const user = await this.validateUser(dto);
+  //   return this.generateToken(user);
+  // }
+  // private async validateUser(dto: LoginUserDto) {
+  //   const user = await this.usersService.getUserByEmail(dto.email);
+  //   if (!user) {
+  //     throw new UnauthorizedException({
+  //       message: 'Incorrect password or email',
+  //     });
+  //   }
+  //   const passwordEquals = await bcrypt.compare(dto.password, user.password);
+
+  //   if (user && passwordEquals) {
+  //     return user;
+  //   }
+  //   throw new UnauthorizedException({
+  //     message: 'Incorrect password or email',
+  //   });
+  // }
+
   async registration(dto: CreateUserDto) {
     const regUser = await this.usersService.findOne(dto.username);
     if (regUser) {
