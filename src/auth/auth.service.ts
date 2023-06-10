@@ -23,22 +23,11 @@ export class AuthService {
     return null;
   }
 
-  // TODO ENDED HERE With this in mind, we can now finally generate a real JWT
   async login(user: any) {
-    // const payload = { username: user._doc.username, sub: user._doc._id };
-
     return {
       access_token: this.jwtService.sign(user._doc),
     };
   }
-
-  // async register(user: any) {
-  //   // const payload = { username: user._doc.username, sub: user._doc._id };
-
-  //   return {
-  //     access_token: this.jwtService.sign(user._doc),
-  //   };
-  // }
 
   public async verifyPassword(
     textPwd: string,
