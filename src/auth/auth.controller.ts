@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Req, Request, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Request,
+  UseGuards,
+} from "@nestjs/common";
 import { LocalAuthGuard } from "./local-auth.guard";
 import { AuthService } from "./auth.service";
 import { JwtAuthGuard } from "./jwt-auth.guard";
@@ -15,7 +23,7 @@ export class AuthController {
   }
 
   @Post("registration")
-  registration(@Req() userDto: CreateUserDto) {
+  registration(@Body() userDto: CreateUserDto) {
     return this.authService.registration(userDto);
   }
 
