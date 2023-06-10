@@ -32,13 +32,13 @@ export class AuthService {
     };
   }
 
-  async register(user: any) {
-    // const payload = { username: user._doc.username, sub: user._doc._id };
+  // async register(user: any) {
+  //   // const payload = { username: user._doc.username, sub: user._doc._id };
 
-    return {
-      access_token: this.jwtService.sign(user._doc),
-    };
-  }
+  //   return {
+  //     access_token: this.jwtService.sign(user._doc),
+  //   };
+  // }
 
   public async verifyPassword(
     textPwd: string,
