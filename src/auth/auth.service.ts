@@ -37,26 +37,26 @@ export class AuthService {
   // }
 
   async login(dto: LoginUserDto) {
-    const user = await this.validateUser(dto);
-    return this.generateToken(user);
+    // const user = await this.validateUser(dto);
+    return this.generateToken(dto);
   }
 
-  private async validateUser(dto: LoginUserDto) {
-    const user = await this.usersService.findOne(dto.username);
-    if (!user) {
-      throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${dto} ${dto.username}`,
-      });
-    }
-    const passwordEquals = await bcrypt.compare(dto.password, user.password);
+  // private async validateUser(dto: LoginUserDto) {
+  //   const user = await this.usersService.findOne(dto.username);
+  //   if (!user) {
+  //     throw new UnauthorizedException({
+  //       message: `Incorrect password or email1 + ${dto} ${dto.username}`,
+  //     });
+  //   }
+  //   const passwordEquals = await bcrypt.compare(dto.password, user.password);
 
-    if (user && passwordEquals) {
-      return user;
-    }
-    throw new UnauthorizedException({
-      message: `Incorrect password or email2 + ${user}`,
-    });
-  }
+  //   if (user && passwordEquals) {
+  //     return user;
+  //   }
+  //   throw new UnauthorizedException({
+  //     message: `Incorrect password or email2 + ${user}`,
+  //   });
+  // }
 
   async registration(dto: CreateUserDto) {
     const regUser = await this.usersService.findOne(dto.username);
