@@ -11,6 +11,7 @@ import { LocalAuthGuard } from "./local-auth.guard";
 import { AuthService } from "./auth.service";
 import { JwtAuthGuard } from "./jwt-auth.guard";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
+import { LoginUserDto } from "src/users/dto/login-user.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -18,8 +19,8 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post("login")
-  async login(@Body() { user }: any) {
-    return this.authService.login(user);
+  async login(@Body() userDto: LoginUserDto) {
+    return this.authService.login(userDto);
   }
 
   @Post("registration")
