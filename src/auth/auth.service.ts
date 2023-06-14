@@ -40,11 +40,12 @@ export class AuthService {
     const user = await this.validateUser(dto);
     return this.generateToken(user);
   }
+
   private async validateUser(dto: LoginUserDto) {
     const user = await this.usersService.findOne(dto.username);
     if (!user) {
       throw new UnauthorizedException({
-        message: "Incorrect password or email",
+        message: `Incorrect password or email1 + ${user}`,
       });
     }
     const passwordEquals = await bcrypt.compare(dto.password, user.password);
@@ -53,7 +54,7 @@ export class AuthService {
       return user;
     }
     throw new UnauthorizedException({
-      message: "Incorrect password or email",
+      message: `Incorrect password or email2 + ${user}`,
     });
   }
 
