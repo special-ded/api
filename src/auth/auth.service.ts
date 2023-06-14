@@ -45,7 +45,7 @@ export class AuthService {
     const user = await this.usersService.findOne(dto.username);
     if (!user) {
       throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${user}`,
+        message: `Incorrect password or email1 + ${dto}`,
       });
     }
     const passwordEquals = await bcrypt.compare(dto.password, user.password);
