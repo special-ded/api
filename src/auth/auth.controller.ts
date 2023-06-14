@@ -19,7 +19,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post("login")
-  async login(@Body() { user }: any) {
+  async login(@Body() user: any) {
     return this.authService.login(user);
   }
 
