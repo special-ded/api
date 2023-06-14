@@ -59,6 +59,10 @@ export class AuthService {
   }
 
   async registration(dto: CreateUserDto) {
+    throw new HttpException(
+      `aaa ${dto}, ${dto.username}`,
+      HttpStatus.BAD_REQUEST
+    );
     const regUser = await this.usersService.findOne(dto.username);
     if (regUser) {
       throw new HttpException("User already exists", HttpStatus.BAD_REQUEST);
