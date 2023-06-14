@@ -1,20 +1,14 @@
-import {
-  IsDefined,
-  IsNotEmpty,
-  IsString,
-  Length,
-  IsEmail,
-} from "class-validator";
+import { IsDefined, IsNotEmpty, IsString, Length } from "class-validator";
 
 export class LoginUserDto {
   @IsDefined()
-  @IsString({ message: "" })
-  @IsEmail({}, { message: "incorrect username" })
+  @IsString()
+  @IsNotEmpty()
   readonly username: string;
 
   @Length(3, 60, { message: "must be from 3 to 60 letters" })
   @IsDefined()
-  @IsString({ message: "" })
+  @IsString()
   @IsNotEmpty({ message: "must not be empty" })
   readonly password: string;
 }
