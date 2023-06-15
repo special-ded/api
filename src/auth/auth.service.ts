@@ -36,6 +36,19 @@ export class AuthService {
   //   };
   // }
 
+  async signIn(username: string, pass: string): Promise<any> {
+    const user = await this.usersService.findOne(username);
+    if (user?.password !== pass) {
+      throw new UnauthorizedException({
+        message: `Incorrect password or email1 + ${username} ${pass}`,
+      });
+    }
+    const { password, ...result } = user;
+    // TODO: Generate a JWT and return it here
+    // instead of the user object
+    return result;
+  }
+
   async login(dto: any) {
     const user = await this.validateUser(dto);
     return this.generateToken(user);

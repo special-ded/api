@@ -6,6 +6,8 @@ import {
   Req,
   Request,
   UseGuards,
+  HttpStatus,
+  HttpCode,
 } from "@nestjs/common";
 import { LocalAuthGuard } from "./local-auth.guard";
 import { AuthService } from "./auth.service";
@@ -21,6 +23,12 @@ export class AuthController {
   @Post("login")
   async login(@Body() userDto: any) {
     return this.authService.login(userDto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post("login2")
+  signIn(@Body() signInDto: Record<string, any>) {
+    return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
   @Post("registration")
