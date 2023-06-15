@@ -36,16 +36,16 @@ export class AuthService {
   //   };
   // }
 
-  async login(dto: LoginUserDto) {
+  async login(dto: any) {
     const user = await this.validateUser(dto);
     return this.generateToken(user);
   }
 
-  private async validateUser(dto: LoginUserDto) {
+  private async validateUser(dto: any) {
     const user = await this.usersService.findOne(dto.username);
     if (!user) {
       throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${dto} ${dto.username}`,
+        message: `Incorrect password or email1 + ${dto} ${dto._doc}`,
       });
     }
     const passwordEquals = await bcrypt.compare(dto.password, user.password);
