@@ -97,6 +97,14 @@ export class AuthService {
     textPwd: string,
     hashedPwd: string
   ): Promise<boolean> {
+    if (!bcrypt.compare(textPwd, hashedPwd)) {
+      throw new UnauthorizedException({
+        message: `Incorrect password or email1 + ${bcrypt.compare(
+          textPwd,
+          hashedPwd
+        )},pass: ${textPwd}`,
+      });
+    }
     return bcrypt.compare(textPwd, hashedPwd);
   }
 
