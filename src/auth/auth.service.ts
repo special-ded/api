@@ -25,10 +25,14 @@ export class AuthService {
       });
     }
     const hashPassword = await bcrypt.hash(pwd, 5);
-
+    const try1 = await bcrypt.hash(
+      "$2b$10$HlIol7wUqdxGvy96MXIb9uldtw23ASGrXsoSd7Cj7GGI9k0ciBlcm",
+      5
+    );
+    const compare = await bcrypt.compare(pwd, user?.password);
     if (user?.password !== hashPassword) {
       throw new UnauthorizedException({
-        message: `Incorrect password or email2 + ${user?.password},pass: ${pwd}hashPsw: ${hashPassword}`,
+        message: `Incorrect password or email2 + ${user?.password},pass: ${pwd}hashPsw: ${hashPassword},TRY:${try1}, COMPARE: ${compare}`,
       });
     }
 
