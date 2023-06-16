@@ -17,18 +17,18 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  // async validateUser(username: string, pwd: string): Promise<any> {
-  //   const user = await this.usersService.findOne(username);
-  //   const pwdMatch: boolean =
-  //     user && (await this.verifyPassword(pwd, user.password));
+  async validateUser(username: string, pwd: string): Promise<any> {
+    const user = await this.usersService.findOne(username);
+    const pwdMatch: boolean =
+      user && (await this.verifyPassword(pwd, user.password));
 
-  //   if (pwdMatch) {
-  //     const { password, ...result } = user;
+    if (pwdMatch) {
+      const { password, ...result } = user;
 
-  //     return result;
-  //   }
-  //   return null;
-  // }
+      return user;
+    }
+    return null;
+  }
 
   // async login(user: any) {
   //   return {
@@ -54,22 +54,22 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  private async validateUser(username: string, pass: string) {
-    const user = await this.usersService.findOne(username);
-    if (!user) {
-      throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${username},pass: ${pass}`,
-      });
-    }
-    const passwordEquals = await bcrypt.compare(pass, user.password);
+  // private async validateUser(username: string, pass: string) {
+  //   const user = await this.usersService.findOne(username);
+  //   if (!user) {
+  //     throw new UnauthorizedException({
+  //       message: `Incorrect password or email1 + ${username},pass: ${pass}`,
+  //     });
+  //   }
+  //   const passwordEquals = await bcrypt.compare(pass, user.password);
 
-    if (user && passwordEquals) {
-      return user;
-    }
-    throw new UnauthorizedException({
-      message: `Incorrect password or email2 + ${user}`,
-    });
-  }
+  //   if (user && passwordEquals) {
+  //     return user;
+  //   }
+  //   throw new UnauthorizedException({
+  //     message: `Incorrect password or email2 + ${user} PASS:${user.password} EQUAL: ${passwordEquals}`,
+  //   });
+  // }
 
   async registration(dto: CreateUserDto) {
     const regUser = await this.usersService.findOne(dto.username);
