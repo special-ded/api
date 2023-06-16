@@ -86,11 +86,10 @@ export class AuthService {
     }
     const hashPassword = await bcrypt.hash(dto.password, 5);
     if (hashPassword) {
-      throw new HttpException(
+      throw new UnauthorizedException(
         `Password: ${dto.password}, 
         HASH: ${hashPassword},
-        DTO: ${dto}`,
-        HttpStatus.BAD_REQUEST
+        DTO: ${dto}`
       );
     }
     const user = await this.usersService.create({
