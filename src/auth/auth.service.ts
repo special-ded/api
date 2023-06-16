@@ -49,19 +49,19 @@ export class AuthService {
     return result;
   }
 
-  async login(dto: any) {
-    const user = await this.validateUser(dto);
+  async login(username: string, pass: string): Promise<any> {
+    const user = await this.validateUser(username, pass);
     return this.generateToken(user);
   }
 
-  private async validateUser(dto: any) {
-    const user = await this.usersService.findOne(dto.username);
+  private async validateUser(username: string, pass: string) {
+    const user = await this.usersService.findOne(username);
     if (!user) {
       throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${dto} ${dto._doc}`,
+        message: `Incorrect password or email1 + ${username} ${pass}`,
       });
     }
-    const passwordEquals = await bcrypt.compare(dto.password, user.password);
+    const passwordEquals = await bcrypt.compare(pass, user.password);
 
     if (user && passwordEquals) {
       return user;
