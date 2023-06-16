@@ -24,9 +24,11 @@ export class AuthService {
         message: `Incorrect username + ${username},pass: ${pwd},`,
       });
     }
-    if (user?.password !== pwd) {
+    const hashPassword = await bcrypt.hash(pwd, 5);
+
+    if (user?.password !== hashPassword) {
       throw new UnauthorizedException({
-        message: `Incorrect password or email2 + ${user?.password},pass: ${pwd}`,
+        message: `Incorrect password or email2 + ${user?.password},pass: ${pwd}hashPsw: ${hashPassword}`,
       });
     }
 
