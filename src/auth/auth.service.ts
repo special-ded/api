@@ -54,9 +54,7 @@ export class AuthService {
       password: hashPassword,
     });
 
-    return `HASH: ${hashPassword},
-     DTOPSW: ${dto.password}, 
-     ${this.generateToken(user)}`;
+    return this.generateToken(user);
   }
 
   public async verifyPassword(
