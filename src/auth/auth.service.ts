@@ -24,12 +24,13 @@ export class AuthService {
         message: `Incorrect username + ${username},pass: ${pwd},`,
       });
     }
-
+    const hash = await bcrypt.hash("123456", 5);
+    const compare2 = await bcrypt.compare("123456", hash);
     const compare = await bcrypt.compare(pwd, user?.password);
     if (!compare) {
       throw new UnauthorizedException({
         message: `Incorrect password or email2 + ${user?.password}, 
-        pass: ${pwd}, COMPARE: ${compare}`,
+        pass: ${pwd}, COMPARE: ${compare}, COMPARE2: ${compare2}`,
       });
     }
 
