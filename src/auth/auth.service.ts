@@ -85,6 +85,14 @@ export class AuthService {
       throw new HttpException("User already exists", HttpStatus.BAD_REQUEST);
     }
     const hashPassword = await bcrypt.hash(dto.password, 5);
+    if (hashPassword) {
+      throw new HttpException(
+        `Password: ${dto.password}, 
+        HASH: ${hashPassword},
+        DTO: ${dto}`,
+        HttpStatus.BAD_REQUEST
+      );
+    }
     const user = await this.usersService.create({
       ...dto,
       password: hashPassword,
