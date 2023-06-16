@@ -19,15 +19,23 @@ export class AuthService {
 
   async validateUser(username: string, pwd: string): Promise<any> {
     const user = await this.usersService.findOne(username);
+    if (!user) {
+      throw new UnauthorizedException({
+        message: `Incorrect password or email1 + ${username},pass: ${pwd}`,
+      });
+    }
     const pwdMatch: boolean =
       user && (await this.verifyPassword(pwd, user.password));
 
     if (pwdMatch) {
       const { password, ...result } = user;
 
-      return user;
+      return result;
     }
-    return null;
+
+    throw new UnauthorizedException({
+      message: `Incorrect password or email2 + ${user} PASS:${user.password} EQUAL: ${pwdMatch}`,
+    });
   }
 
   // async login(user: any) {
@@ -36,18 +44,18 @@ export class AuthService {
   //   };
   // }
 
-  async signIn(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-    if (user?.password !== pass) {
-      throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${username} ${pass}`,
-      });
-    }
-    const { password, ...result } = user;
-    // TODO: Generate a JWT and return it here
-    // instead of the user object
-    return result;
-  }
+  // async signIn(username: string, pass: string): Promise<any> {
+  //   const user = await this.usersService.findOne(username);
+  //   if (user?.password !== pass) {
+  //     throw new UnauthorizedException({
+  //       message: `Incorrect password or email1 + ${username} ${pass}`,
+  //     });
+  //   }
+  //   const { password, ...result } = user;
+  //   // TODO: Generate a JWT and return it here
+  //   // instead of the user object
+  //   return result;
+  // }
 
   async login(username: string, pass: string): Promise<any> {
     const user = await this.validateUser(username, pass);
