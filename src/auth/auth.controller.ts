@@ -22,7 +22,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post("login")
   async login(@Body() userDto: any) {
-    return this.authService.login(userDto);
+    return this.authService.login(userDto.username, userDto.password);
   }
 
   @HttpCode(HttpStatus.OK)
@@ -44,7 +44,7 @@ export class AuthController {
       username: req.user.username,
       createdAt: req.user.createdAt,
       updatedAt: req.user.updatedAt,
-      token: this.authService.login(req),
+      token: this.authService.login(req.user.username, req.user.password),
     };
   }
 }
