@@ -34,7 +34,7 @@ export class UsersService {
     try {
       return await new this.model({
         ...body,
-        password: await BaseControllerService.hashPWD(body.password),
+        password: body.password,
       }).save();
     } catch ({ code }) {
       if (code === 11000) {
