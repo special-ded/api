@@ -21,20 +21,25 @@ export class AuthService {
     const user = await this.usersService.findOne(username);
     if (!user) {
       throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${username},pass: ${pwd}`,
+        message: `Incorrect password or email1 + ${username},pass: ${pwd},`,
       });
     }
     const pwdMatch: boolean =
-      user && (await this.verifyPassword(pwd, user.password));
+      user && (await bcrypt.compare(pwd, user.password));
 
     if (pwdMatch) {
       const { password, ...result } = user;
 
-      return result;
+      return user;
     }
 
     throw new UnauthorizedException({
-      message: `Incorrect password or email2 + ${user} PASS:${user.password} EQUAL: ${pwdMatch}`,
+      message: `Incorrect password or email2 + ${user} PASS:${
+        user.password
+      } EQUAL: ${pwdMatch}, COMPARE:${await bcrypt.compare(
+        pwd,
+        user.password
+      )}`,
     });
   }
 
