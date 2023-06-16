@@ -21,26 +21,17 @@ export class AuthService {
     const user = await this.usersService.findOne(username);
     if (!user) {
       throw new UnauthorizedException({
-        message: `Incorrect password or email1 + ${username},pass: ${pwd},`,
+        message: `Incorrect username + ${username},pass: ${pwd},`,
       });
     }
-    const pwdMatch: boolean =
-      user && (await bcrypt.compare(pwd, user.password));
-
-    if (pwdMatch) {
-      const { password, ...result } = user;
-
-      return user;
+    if (user?.password !== pwd) {
+      throw new UnauthorizedException({
+        message: `Incorrect password or email2 + ${user?.password},pass: ${pwd}`,
+      });
     }
 
-    throw new UnauthorizedException({
-      message: `Incorrect password or email2 + ${user} PASS:${
-        user.password
-      } EQUAL: ${pwdMatch}, COMPARE:${await bcrypt.compare(
-        pwd,
-        user.password
-      )}`,
-    });
+    const { password, ...result } = user;
+    return user;
   }
 
   // async login(user: any) {
